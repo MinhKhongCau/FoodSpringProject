@@ -22,5 +22,9 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String body;
     private LocalDateTime createAt;
+    public Post(String title, String body) {
+        this.title = title;
+        this.body = body;
+    }
 
 }

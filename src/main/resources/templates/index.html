@@ -15,7 +15,11 @@
   <!-- slider section -->
   <section class="slider_section">
     <div id="container">
-
+      <div class="posts" th:each="post : ${posts}">
+        <h4 th:text="${post.title}">Title</h4>
+        <p th:text="${post.body}">Body</p>
+        </hr>
+      </div>
     </div>
   </section>
 
