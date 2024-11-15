@@ -30,8 +30,8 @@ public class PostService {
     public void save(Post post) {
         if (post.getId() == null) {
             post.setCreateAt(LocalDateTime.now());
+            System.out.println("***Post data was saved");
         }
         postRepository.save(post);
-        System.out.println("***Post data was saved");
     }
 }

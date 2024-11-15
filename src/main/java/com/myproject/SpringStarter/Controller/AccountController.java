@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.myproject.SpringStarter.Model.Account;
 import com.myproject.SpringStarter.Service.AccountService;
 
-
 @Controller
-public class RegisterController {
+public class AccountController {
     @Autowired
     private AccountService accountService;
 
@@ -21,5 +20,13 @@ public class RegisterController {
         accountService.save(account);
         return "redirect:/home";
     }
+
+    @PostMapping("/login")
+    public String getLogin(@ModelAttribute Account account) {
+        Account account2 = accountService.getById(account.getId()).get();
+        System.out.println("***"+account2.toString());
+        return "redirect:/home";
+    }
+    
     
 }

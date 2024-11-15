@@ -12,30 +12,27 @@
     </div>
     <header th:replace="/Fragments/header :: header"></header>
   </div>
-  <!-- Register section -->
+  <!-- login section -->
   <section class="book_section layout_padding">
     <div class="container">
       <div class="heading_container">
         <h2>
-          Register account
+          Login
         </h2>
       </div>
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <form action="#" method="post" th:action="@{/register}" th:object="${account}">
+            <form action="#" method="post" th:action="@{/login}" th:object="${account}">
               <div>
                 <input id="email" name="email" type="email" class="form-control" placeholder="Your email" />
               </div>
               <div>
                 <input id="password" name="password" type="password" class="form-control" placeholder="Your password"/>
               </div>
-              <div>
-                <input id="firstname" name="firstname" type="text" class="form-control" placeholder="Your name" />
-              </div>
               <div class="btn_box">
                 <button type="submit">
-                  Register
+                  Login
                 </button>
               </div>
             </form>
@@ -44,7 +41,7 @@
       </div>
     </div>
   </section>
-  <!-- end register section -->
+  <!-- end login section -->
 
   <!-- end client section -->
 

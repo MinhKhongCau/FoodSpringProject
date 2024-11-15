@@ -29,8 +29,8 @@ public class HomeController {
     public String register(Model model) {
         return "register";
     }
-    @GetMapping("/menu")
+    @GetMapping("/login")
     public String menu(Model model) {
-        return "menu";
+        return "login";
     }
 }

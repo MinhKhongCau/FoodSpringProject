@@ -30,4 +30,8 @@ public class AccountService {
         accountRepsitory.delete(account);
     }
 
+    public void getByEmail(String email) {
+        
+    }
+
 }

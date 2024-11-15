@@ -1,4 +1,4 @@
-package com.myproject.SpringStarter.SeedData;
+package com.myproject.SpringStarter.Config;
 
 import java.util.List;
 
