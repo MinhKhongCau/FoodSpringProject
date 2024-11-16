@@ -28,8 +28,8 @@ public class Post {
         this.title = title;
         this.body = body;
     }
-    // @ManyToOne
-    // @JoinColumn(name = "account_id",referencedColumnName = "account",nullable = false)
-    // private Account account;
+    @ManyToOne
+    @JoinColumn(name = "account",referencedColumnName = "id",nullable = true)
+    private Account account;
 
 }

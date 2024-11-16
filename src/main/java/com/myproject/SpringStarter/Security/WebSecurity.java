@@ -1,9 +1,11 @@
-package com.myproject.SpringStarter.Config;
+package com.myproject.SpringStarter.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -28,20 +30,28 @@ public class WebSecurity {
                 .permitAll()
                 .anyRequest()
                 .authenticated()
-        )
-        // Config when no permission page will be redirect login page '/login'
-        .formLogin((form) -> form
-            .loginPage("/login")
-            .permitAll()
-        )
-        .logout((logout) -> logout.permitAll());
-
-        // TODO: 
-        http.csrf(t -> t.disable());
-        http.headers(t->t.frameOptions(d->d.disable()));
-
+            
+            )
+            // Config when no permission page will be redirect login page '/login'
+            .formLogin((form) -> form
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/",true)
+                .failureUrl("/login?error")
+                .permitAll()
+            )
+            .logout((logout) -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .permitAll());
 
         return http.build();
     }
 
+    @Bean
+    static PasswordEncoder encodePassword() {
+        return new BCryptPasswordEncoder();
+    }
 }
