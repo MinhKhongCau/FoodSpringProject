@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
-<head th:replace="/Fragments/head :: head"></head>
+<head th:replace="~{/Fragments/head :: head}"></head>
 
 <body>
 
@@ -10,7 +10,7 @@
     <div class="bg-box">
       <img src="images/nav-bg.jpg" alt="">
     </div>
-    <header th:replace="/Fragments/header :: header"></header>
+    <header th:replace="~{/Fragments/header :: header}"></header>
   </div>
   <!-- slider section -->
   <section class="slider_section">
@@ -25,7 +25,7 @@
 
   <!-- end client section -->
 
-  <footer th:replace="/Fragments/footer :: footer">
+  <footer th:replace="~{/Fragments/footer :: footer}">
 </body>
 
 </html>

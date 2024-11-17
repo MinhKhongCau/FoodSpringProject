@@ -37,7 +37,6 @@ public class AccountService implements UserDetailsService {
 
     public Account save(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
-        account.setRole(Roles.USER.getRole());
         System.out.println("***"+account.toString());
 
         return accountRepsitory.save(account);
@@ -61,11 +60,13 @@ public class AccountService implements UserDetailsService {
         
         Account account = optionalAccount.get();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        
+        grantedAuthorities.add(new SimpleGrantedAuthority(account.getRole()));
+
         for (Authority auth: account.getAuthorities()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(auth.getName()));
         }
 
+        System.out.println("***Load user: "+account.toString());
         return new User(account.getEmail(),account.getPassword(),grantedAuthorities);
     }
 

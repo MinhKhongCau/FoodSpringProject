@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-                xmlns:sec="http://www.thymeleaf.org">
+<html lang="en">
 
-<head th:replace="/Fragments/head :: head"></head>
+<head th:replace="~{/Fragments/head :: head}" xmlns:th="http://www.thymeleaf.org"></head>
 
 <body>
 
@@ -10,7 +9,7 @@
     <div class="bg-box">
       <img src="images/nav-bg.jpg" alt="">
     </div>
-    <header th:replace="/Fragments/header :: header"></header>
+    <header th:replace="~{/Fragments/header :: header}"></header>
   </div>
   <!-- login section -->
   <section class="book_section layout_padding">
@@ -45,7 +44,7 @@
 
   <!-- end client section -->
 
-  <footer th:replace="/Fragments/footer :: footer">
+  <footer th:replace="~{/Fragments/footer :: footer}">
 </body>
 
 </html>

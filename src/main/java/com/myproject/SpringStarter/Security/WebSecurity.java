@@ -8,6 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.myproject.SpringStarter.Until.Constants.Privillage;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurity {
@@ -15,6 +17,7 @@ public class WebSecurity {
         "/",
         "/home",
         "/register",
+        "/about/**",
         "/db-console/**",
         "css/**",
         "fonts/**",
@@ -26,11 +29,11 @@ public class WebSecurity {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(request -> request
-                .requestMatchers(WHILELIST)
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-            
+                .requestMatchers(WHILELIST).permitAll()
+                .requestMatchers("/about/**").authenticated()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/editor/**").hasAnyRole("ADMIN","EDITOR")
+                .requestMatchers("/admin/**").hasAnyAuthority(Privillage.ACCESS_ADMIN_PANEL.getName())
             )
             // Config when no permission page will be redirect login page '/login'
             .formLogin((form) -> form
@@ -46,6 +49,8 @@ public class WebSecurity {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .permitAll());
+        http.csrf(csrf -> csrf .disable());
+        http.headers(h -> h.frameOptions(c -> c.disable()));
 
         return http.build();
     }
@@ -54,4 +59,5 @@ public class WebSecurity {
     static PasswordEncoder encodePassword() {
         return new BCryptPasswordEncoder();
     }
+
 }

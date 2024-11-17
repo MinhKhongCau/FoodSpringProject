@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
 
-<head th:replace="/Fragments/head :: head"></head>
+<head th:replace="~{/Fragments/head :: head}"></head>
 
 <body class="sub_page">
-  <header th:replace="/Fragments/header :: headerFragment"></header>
+  <div class="hero_area">
+    <div class="bg-box">
+      <img src="images/nav-bg.jpg" alt="">
+    </div>
+    <header th:replace="~{/Fragments/header :: header}"></header>
+  </div>
 
 
   <!-- about section -->
-
   <section class="about_section layout_padding">
     <div class="container  ">
         <h1>Admin message...</h1>
@@ -17,7 +21,7 @@
 
   <!-- end about section -->
 
-  <footer th:replace="/Fragments/footer :: footer"></footer>
+  <footer th:replace="~{/Fragments/footer :: footer}"></footer>
 </body>
 
 </html>

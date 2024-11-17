@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-                xmlns:sec="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <div th:fragment="headerFragment" class="hero_area">
     <div class="bg-box">
@@ -39,10 +40,15 @@
                         </span>
                         <span sec:authorize="isAuthenticated()">
                             <li class="nav-item">
-                                <a class="nav-link" href="/book">book</a>
+                                <a class="nav-link" href="/logout">Logout</a>
                             </li>
                         </span>
-                        <span sec:authorize="hasRole('ROLE_ADMIN')">
+                        <span>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about">About</a>
+                            </li>
+                        </span>
+                        <span sec:authorize="hasAnyRole('ROLE_EDITOR','ROLE_ADMIN')">
                             <li class="nav-item">
                                 <a class="nav-link" href="/admin">Admin</a>
                             </li>
