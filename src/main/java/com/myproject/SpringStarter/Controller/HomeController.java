@@ -15,12 +15,21 @@ public class HomeController {
     @Autowired
     private PostService postService;
     
+    @GetMapping("/")
+    public String firstPage(Model model) {
+        return "index";
+    }
+
     @GetMapping("/home")
     public String home(Model model) {
         List<Post> posts = postService.getAll();
         model.addAttribute("posts",posts);
-        return "index";
+        for (Post post: posts) {
+            System.out.println("***"+post.getId() + " "+ post.getBody() + " " + post.getAccount().getFirstname() );
+        }
+        return "home";
     }
+
     @GetMapping("/about")
     public String about(Model model) {
         return "about";

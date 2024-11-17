@@ -1,5 +1,7 @@
 package com.myproject.SpringStarter.Security;
 
+import javax.management.relation.Role;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,8 +32,8 @@ public class WebSecurity {
         http
             .authorizeHttpRequests(request -> request
                 .requestMatchers(WHILELIST).permitAll()
-                .requestMatchers("/about/**").authenticated()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/post/**").authenticated()
                 .requestMatchers("/editor/**").hasAnyRole("ADMIN","EDITOR")
                 .requestMatchers("/admin/**").hasAnyAuthority(Privillage.ACCESS_ADMIN_PANEL.getName())
             )

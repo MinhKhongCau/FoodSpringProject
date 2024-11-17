@@ -15,7 +15,12 @@
 
   <section class="about_section layout_padding">
     <div class="container">
-      
+        <div class="posts" th:each="post : ${posts}">
+            <h3><a th:href="@{'/post/'+ ${post.id}}" th:text="${post.title}"></a></h3>
+            <h5 th:text="'Author: ' + ${post.account.firstname} + ' | CreateAt: ' + ${post.createAt}"></h5>
+            <p th:text="${post.body}"></p>
+           </hr>
+         </div>
     </div>
   </section>
 
