@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -12,13 +11,11 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 public class Post {
     @Id
     @GeneratedValue
@@ -30,9 +27,10 @@ public class Post {
     private String body;
 
     private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 
     @ManyToOne
-    @JoinColumn(name = "account",referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "account_id",referencedColumnName = "id",nullable = false)
     private Account account;
     
     public Post(String title, String body,Account account) {

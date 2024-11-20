@@ -1,7 +1,5 @@
 package com.myproject.SpringStarter.Security;
 
-import javax.management.relation.Role;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.myproject.SpringStarter.Until.Constants.Privillage;
+import com.myproject.SpringStarter.Until.Constants.Roles;
 
 @Configuration
 @EnableWebSecurity
@@ -21,6 +20,7 @@ public class WebSecurity {
         "/register",
         "/about/**",
         "/db-console/**",
+        "/login/**",
         "css/**",
         "fonts/**",
         "images/**",
@@ -32,10 +32,10 @@ public class WebSecurity {
         http
             .authorizeHttpRequests(request -> request
                 .requestMatchers(WHILELIST).permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/post/**").authenticated()
-                .requestMatchers("/editor/**").hasAnyRole("ADMIN","EDITOR")
-                .requestMatchers("/admin/**").hasAnyAuthority(Privillage.ACCESS_ADMIN_PANEL.getName())
+                .requestMatchers("/admin/**").hasRole(Roles.ADMIN.getRole())
+                .requestMatchers("/editor/**").hasAnyRole(Roles.ADMIN.getRole(),Roles.EDITOR.getRole())
+                .requestMatchers("/admin/**").hasAuthority(Privillage.ACCESS_ADMIN_PANEL.getName())
             )
             // Config when no permission page will be redirect login page '/login'
             .formLogin((form) -> form
@@ -43,7 +43,7 @@ public class WebSecurity {
                 .loginProcessingUrl("/login")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/",true)
+                .defaultSuccessUrl("/home",true)
                 .failureUrl("/login?error")
                 .permitAll()
             )

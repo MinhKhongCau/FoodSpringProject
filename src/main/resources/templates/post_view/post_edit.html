@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:replace="~{/Fragments/head :: head}"></head>
+
+<body>
+
+    <div class="hero_area">
+        <div class="bg-box">
+            <img th:src="@{/images/nav-bg.jpg}" alt="">
+        </div>
+        <header th:replace="~{/Fragments/header :: header}"></header>
+    </div>
+    <!-- slider section -->
+    <section class="food_section layout_padding">
+        <div class="container">
+            <div class="col-md-6">
+                <div class="form_container">
+                    <h2>
+                        Post edit
+                    </h2>
+                    <form method="post" th:action="@{/post/edit}" th:object="${post}">
+                        <div class="form-group">
+                            <input type="hidden" name="id" id="id" th:field="*{id}"/>
+                            <input type="hidden" name="createAt" id="createAt" th:field="*{createAt}"/>
+                            <input type="hidden" name="account" id="account" th:field="*{account}"/>
+                            <input id="title" name="title" type="text" class="form-control" th:field="*{title}"
+                                placeholder="Post's title" />
+                        </div>
+                        <div  class="form-group">
+                            <textarea id="editor" th:field="*{body}" name="body" type="textarea" 
+                            class="form-control" rows="7" placeholder="Your body"></textarea>
+                        </div>
+                        <div class="btn_box">
+                            <button type="btn" class="btn btn-primary">
+                                Save charge
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- end client section -->
+
+    <footer th:replace="~{/Fragments/footer :: footer}">
+</body>
+
+</html>

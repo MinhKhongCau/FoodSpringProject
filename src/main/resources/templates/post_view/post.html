@@ -8,22 +8,50 @@
 
   <div class="hero_area">
     <div class="bg-box">
-      <img src="images/nav-bg.jpg" alt="">
+      <img th:src="@{/images/nav-bg.jpg}" alt="">
     </div>
     <header th:replace="~{/Fragments/header :: header}"></header>
   </div>
   <!-- slider section -->
-  <section class="slider_section">
-    <div id="container">
-      <!-- <div>
-        <h3 th:text="Title: ${post.title}"></h3>
-        <h5 th:text="Author: ${post.account.firstname}"></h5>
-        <p th:text="body: ${post.body}"></p>
+  <section class="about_section layout_padding">
+    <div class="container">
+      <div class="post">
+        <h3><a th:href="@{'/post/'+ ${post.id}}" th:text="${post.title}"></a></h3>
+        <h5 th:text="'Author: ' + ${post.account.firstname} + ' | CreateAt: ' + ${#temporals.format(post.createAt,'yyyy-MM-dd HH:mm')}"></h5>
+            <h5 th:text="'UpdateAt: ' + ${#temporals.format(post.updateAt,'yyyy-MM-dd HH:mm')}"></h5>
+        <p th:utext="${post.body}"></p>
         </hr>
-      </div> -->
+        <div class="btn_box" th:if="${isOwner}">
+          <a class="btn btn-secondary" th:href="@{'/post/'+${post.id}+'/edit'}" role="button">Edit post</a> | 
+            <!-- Button trigger modal -->
+          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">
+            Delete
+          </button>
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure to delete Post?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a class="btn btn-danger" th:href="@{'/post/'+${post.id}+'/delete'}" role="button">Delete post</a>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- end client section -->
 
   <footer th:replace="~{/Fragments/footer :: footer}">

@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import com.myproject.SpringStarter.Model.Account;
 import com.myproject.SpringStarter.Model.Authority;
 import com.myproject.SpringStarter.Repository.AccountRepsitory;
-import com.myproject.SpringStarter.Until.Constants.Roles;
 
 @Service
 public class AccountService implements UserDetailsService {
@@ -46,8 +45,8 @@ public class AccountService implements UserDetailsService {
         accountRepsitory.delete(account);
     }
 
-    public void getByEmail(String email) {
-        
+    public Optional<Account> getByEmail(String email) {
+        return accountRepsitory.findOneByEmailIgnoreCase(email);
     }
 
     @Override
@@ -55,6 +54,7 @@ public class AccountService implements UserDetailsService {
         // TODO Auto-generated method stub
         Optional<Account> optionalAccount = accountRepsitory.findOneByEmailIgnoreCase(email);
         if (!optionalAccount.isPresent()) {
+            System.out.println("***Load user: "+optionalAccount.get().getEmail());
             throw new UsernameNotFoundException(email);
         }
         

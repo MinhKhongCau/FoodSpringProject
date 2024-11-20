@@ -16,13 +16,11 @@ import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 public class Account {
     @Id
     @GeneratedValue
@@ -35,7 +33,7 @@ public class Account {
     private String lastname;
     private String role;
 
-    @OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "account")
     private List<Post> posts;
 
     @ManyToMany(fetch = FetchType.EAGER)

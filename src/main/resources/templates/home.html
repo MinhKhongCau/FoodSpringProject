@@ -17,8 +17,9 @@
     <div class="container">
         <div class="posts" th:each="post : ${posts}">
             <h3><a th:href="@{'/post/'+ ${post.id}}" th:text="${post.title}"></a></h3>
-            <h5 th:text="'Author: ' + ${post.account.firstname} + ' | CreateAt: ' + ${post.createAt}"></h5>
-            <p th:text="${post.body}"></p>
+            <h5 th:text="'Author: ' + ${post.account.firstname} + ' | CreateAt: ' + ${#temporals.format(post.createAt,'yyyy-MM-dd HH:mm')}"></h5>
+            <h5 th:text="'UpdateAt: ' + ${#temporals.format(post.updateAt,'yyyy-MM-dd HH:mm')}"></h5>
+            <p th:utext="${post.body}"></p>
            </hr>
          </div>
     </div>

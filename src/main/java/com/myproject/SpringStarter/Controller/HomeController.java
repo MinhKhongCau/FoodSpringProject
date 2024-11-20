@@ -25,7 +25,7 @@ public class HomeController {
         List<Post> posts = postService.getAll();
         model.addAttribute("posts",posts);
         for (Post post: posts) {
-            System.out.println("***"+post.getId() + " "+ post.getBody() + " " + post.getAccount().getFirstname() );
+            System.out.println("***"+post.getId() + " "+ post.getTitle() + " " + post.getAccount().getAuthorities());
         }
         return "home";
     }

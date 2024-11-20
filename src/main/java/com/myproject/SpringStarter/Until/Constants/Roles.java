@@ -1,7 +1,7 @@
 package com.myproject.SpringStarter.Until.Constants;
 
 public enum Roles {
-    USER("ROLE_USER"), ADMIN("ROLE_ADMIN"),EDITOR("ROLE_EDITOR");
+    USER("USER"), ADMIN("ADMIN"),EDITOR("EDITOR");
     
     private String role;
     private Roles(String role) {
