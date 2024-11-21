@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org">
+
+<head th:replace="~{/Fragments/head :: head}"></head>
+
+<body>
+
+  <div class="hero_area">
+    <div class="bg-box">
+      <img src="images/nav-bg.jpg" alt="">
+    </div>
+    <header th:replace="~{/Fragments/header :: header}"></header>
+  </div>
+  <!-- Register section -->
+  <section class="book_section layout_padding">
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+          Register account
+        </h2>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form_container">
+            <form action="#" method="post" th:action="@{/register}" th:object="${account}">
+              <div>
+                <div th:if="${#fields.hasErrors('email')}" th:error="*{email}" class="alert alert-danger" role="alert">Email error</div>
+                <input id="email" name="email" type="email" class="form-control" placeholder="Your email"/>
+              </div>
+              <div>
+                <div th:error="*{password}" th:if="${#fields.hasErrors('password')}" class="alert alert-danger" role="alert">Password error</div>
+                <input id="password" name="password" type="password" class="form-control" placeholder="Your password"/>
+              </div>
+              <div>
+                <div th:error="*{firstname}" th:if="${#fields.hasErrors('firstname')}" class="alert alert-danger" role="alert">Firstname error</div>
+                <input id="firstname" name="firstname" type="text" class="form-control" placeholder="Your firstname"/>
+              </div>
+              <div>
+                <input id="lastname" name="lastname" type="text" class="form-control" placeholder="Your lastname" />
+              </div>
+              <div>
+                <input id="age" name="age" type="number" class="form-control" min="0" value="0"/>
+              </div>
+              <div>
+                <input id="birhdate" name="birthdate" type="date" class="form-control" placeholder="Your birhdate" />
+              </div>
+              <div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender1">
+                  <label class="form-check-label" for="gender1">
+                    Male
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender2" checked>
+                  <label class="form-check-label" for="gender2">
+                    Female
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender2">
+                  <label class="form-check-label" for="gender3">
+                    Others
+                  </label>
+                </div>
+              </div>
+              <div class="btn_box">
+                <button type="submit">
+                  Register
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end register section -->
+
+  <!-- end client section -->
+
+  <footer th:replace="~{/Fragments/footer :: footer}">
+</body>
+
+</html>

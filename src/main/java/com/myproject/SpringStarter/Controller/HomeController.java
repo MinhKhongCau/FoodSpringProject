@@ -34,12 +34,4 @@ public class HomeController {
     public String about(Model model) {
         return "about";
     }
-    @GetMapping("/register")
-    public String register(Model model) {
-        return "register";
-    }
-    @GetMapping("/login")
-    public String menu(Model model) {
-        return "login";
-    }
 }

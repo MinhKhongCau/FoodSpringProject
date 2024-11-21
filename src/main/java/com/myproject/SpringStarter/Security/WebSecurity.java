@@ -49,7 +49,7 @@ public class WebSecurity {
             )
             .logout((logout) -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/home")
                 .permitAll());
         http.csrf(csrf -> csrf .disable());
         http.headers(h -> h.frameOptions(c -> c.disable()));

@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import com.myproject.SpringStarter.Model.Account;
 import com.myproject.SpringStarter.Model.Post;
 import com.myproject.SpringStarter.Service.AccountService;
 import com.myproject.SpringStarter.Service.PostService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -81,7 +84,10 @@ public class PostController {
     
     @PostMapping("/post/add")
     @PreAuthorize("isAuthenticated()")
-    public String postAddPostHandler(@ModelAttribute Post post, Principal principal) {
+    public String postAddPostHandler(@Valid @ModelAttribute Post post, Principal principal,BindingResult result) {
+        if (result.hasErrors()) {
+            return "post_view/post";
+        }
         String authUser = "emal";
         if (principal != null){
             authUser = principal.getName();

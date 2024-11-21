@@ -23,11 +23,14 @@
                     <form method="post" th:action="@{/post/add}" th:object="${post}">
                         <div class="form-group">
                             <input type="hidden" name="account" id="account" th:field="${post.account}"/>
+                            <div th:error="*{title}" th:if="${#fields.hasErrors('title')}" class="alert alert-danger" role="alert">Title error</div>
                             <input id="title" name="title" type="text" class="form-control"
-                                placeholder="Post's title" />
+                                placeholder="Post's title" required/>
                         </div>
                         <div  class="form-group">
-                            <textarea id="editor" th:field="${post.body}" name="body" type="textarea" class="form-control" rows="7" placeholder="Your body"></textarea>
+                            <!-- <div th:error="*{body}" th:if="${#fields.hasErrors('body')}" class="alert alert-danger" role="alert">Body error</div> -->
+                            <textarea id="editor" th:field="${post.body}" name="body" type="textarea" class="form-control" rows="7" 
+                            placeholder="Your body"></textarea>
                         </div>
                         <div class="btn_box">
                             <button type="btn" class="btn btn-primary">

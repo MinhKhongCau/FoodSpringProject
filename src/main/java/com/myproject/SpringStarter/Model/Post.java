@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,9 +22,11 @@ public class Post {
     @GeneratedValue
     private Long id;
     
+    @NotEmpty(message = "Title missing")
     private String title;
 
     @Column(columnDefinition = "TEXT")
+    @NotEmpty(message = "Body missing")
     private String body;
 
     private LocalDateTime createAt;

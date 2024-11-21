@@ -24,10 +24,10 @@
           <div class="form_container">
             <form action="#" method="post" th:action="@{/login}" th:object="${account}">
               <div>
-                <input id="email" name="email" type="email" class="form-control" placeholder="Your email" />
+                <input id="email" name="email" type="email" class="form-control" placeholder="Your email" required/>
               </div>
               <div>
-                <input id="password" name="password" type="password" class="form-control" placeholder="Your password"/>
+                <input id="password" name="password" type="password" class="form-control" placeholder="Your password" required/>
               </div>
               <div class="btn_box">
                 <button type="submit">
