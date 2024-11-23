@@ -34,7 +34,7 @@
                             </li>
                         </span>
                         <span>
-                            <li class="nav-item">
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
                                 <a class="nav-link" href="/profile">Profile</a>
                             </li>
                         </span>
@@ -58,7 +58,7 @@
                                 <a class="nav-link" href="/logout">Logout</a>
                             </li>
                         </span>
-                        <span sec:authorize="hasAnyRole('ROLE_EDITOR','ROLE_ADMIN')">
+                        <span sec:authorize="hasAnyRole('EDITOR','ADMIN')">
                             <li class="nav-item">
                                 <a class="nav-link" href="/admin">Admin</a>
                             </li>

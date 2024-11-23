@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -38,6 +37,9 @@ public class AccountService implements UserDetailsService {
 
     public Account save(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
+        if (account.getPhoto() == null) {
+            account.setPhoto("/images/person_img.png");
+        }
         System.out.println("***"+account.toString());
 
         return accountRepsitory.save(account);
@@ -61,9 +63,6 @@ public class AccountService implements UserDetailsService {
         }
         
         Account account = optionalAccount.get();
-        if (account.getPhoto() == null) {
-            account.setPhoto("/images/person_img.png");
-        }
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(account.getRole()));
 

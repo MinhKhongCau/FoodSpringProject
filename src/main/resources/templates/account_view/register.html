@@ -26,44 +26,32 @@
             <form action="#" method="post" th:action="@{/register}" th:object="${account}">
               <div>
                 <div th:if="${#fields.hasErrors('email')}" th:error="*{email}" class="alert alert-danger" role="alert">Email error</div>
-                <input id="email" name="email" type="email" class="form-control" placeholder="Your email"/>
+                <input id="email" name="email" type="email" class="form-control" placeholder="Your email" th:field="*{email}"/>
               </div>
               <div>
                 <div th:error="*{password}" th:if="${#fields.hasErrors('password')}" class="alert alert-danger" role="alert">Password error</div>
-                <input id="password" name="password" type="password" class="form-control" placeholder="Your password"/>
+                <input id="password" name="password" type="password" class="form-control" placeholder="Your password" th:field="*{password}"/>
               </div>
               <div>
                 <div th:error="*{firstname}" th:if="${#fields.hasErrors('firstname')}" class="alert alert-danger" role="alert">Firstname error</div>
-                <input id="firstname" name="firstname" type="text" class="form-control" placeholder="Your firstname"/>
+                <input id="firstname" name="firstname" type="text" class="form-control" placeholder="Your firstname" th:field="*{firstname}"/>
               </div>
               <div>
-                <input id="lastname" name="lastname" type="text" class="form-control" placeholder="Your lastname" />
+                <input id="lastname" name="lastname" type="text" class="form-control" placeholder="Your lastname" th:field="*{lastname}"/>
               </div>
               <div>
-                <input id="age" name="age" type="number" class="form-control" min="0" value="0"/>
+                <input id="age" name="age" type="number" class="form-control" min="0" value="*{age}"/>
               </div>
               <div>
-                <input id="birhdate" name="birthdate" type="date" class="form-control" placeholder="Your birhdate" />
+                <input id="birthdate" name="birthdate" type="date" class="form-control" placeholder="Your birthdate" value="*{birthdate}"/>
               </div>
               <div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="gender1">
-                  <label class="form-check-label" for="gender1">
-                    Male
-                  </label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="gender2" checked>
-                  <label class="form-check-label" for="gender2">
-                    Female
-                  </label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="gender2">
-                  <label class="form-check-label" for="gender3">
-                    Others
-                  </label>
-                </div>
+                <select class="form-select form-control" aria-label="Default select example" name="gender">
+                  <option th:if="${account.gender}" value="${account.gender}" th:text="${account.gender}"></option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="others">Others</option>
+                </select>
               </div>
               <div class="btn_box">
                 <button type="submit">

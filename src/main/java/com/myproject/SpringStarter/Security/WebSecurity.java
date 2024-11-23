@@ -21,9 +21,9 @@ public class WebSecurity {
         "/about/**",
         "/db-console/**",
         "/login/**",
-        "css/**",
-        "fonts/**",
-        "images/**",
+        "/css/**",
+        "/fonts/**",
+        "/images/**",
         "js/**"
     };
 
@@ -36,6 +36,7 @@ public class WebSecurity {
                 .requestMatchers("/admin/**").hasRole(Roles.ADMIN.getRole())
                 .requestMatchers("/editor/**").hasAnyRole(Roles.ADMIN.getRole(),Roles.EDITOR.getRole())
                 .requestMatchers("/admin/**").hasAuthority(Privillage.ACCESS_ADMIN_PANEL.getName())
+                .requestMatchers("/profile/**").authenticated()
             )
             // Config when no permission page will be redirect login page '/login'
             .formLogin((form) -> form
