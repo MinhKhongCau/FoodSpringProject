@@ -7,7 +7,7 @@
 
   <div class="hero_area">
     <div class="bg-box">
-      <img src="images/nav-bg.jpg" alt="">
+      <img th:src="images/nav-bg.jpg" alt="">
     </div>
     <header th:replace="~{/Fragments/header :: header}"></header>
   </div>
@@ -24,8 +24,12 @@
           <div class="form_container">
             <div class="mb-3">
               <div>
-                <img th:src="@{/images/person_img.png}" alt="Photo profile" class="img-thumbnail rounded-circle">
+                <img th:src="@{${account.photo}}" alt="Photo profile" class="img-thumbnail rounded-circle" width="215" height="200">
               </div>
+              <div th:if="${error}" class="alert alert-danger"
+                role="alert">File upload error</div>
+              <div th:text="${message}" th:if="${message}" class="alert alert-success"
+                role="alert"></div>
               <!-- Button trigger modal -->
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadPhotoModal">
                 Upload Photo
@@ -95,8 +99,8 @@
               <img th:src="@{/images/person_img.png}" alt="Photo profile" class="img-thumbnail rounded-circle">
               <hr/>
               <h3>After image</h3>
-              <form action="#" method="post" th:action="@{/profile/photo}">
-                <input type="file" class="form-control-file" name="file" />
+              <form action="#" method="post" th:action="@{/profile/photo}" enctype="multipart/form-data">
+                <input type="file" class="form-control-file" name="file" accept="image/png, image/jpg, image/jpeg"/>
                 <button type="submit" class="btn btn-primary">Upload photo</button>
               </form>
             </div>

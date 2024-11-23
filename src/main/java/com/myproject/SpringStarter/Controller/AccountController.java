@@ -1,5 +1,9 @@
 package com.myproject.SpringStarter.Controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -14,10 +18,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 
 import com.myproject.SpringStarter.Model.Account;
 import com.myproject.SpringStarter.Service.AccountService;
+import com.myproject.SpringStarter.Until.AppUtils;
+import com.myproject.SpringStarter.Until.RandomString;
 import com.myproject.SpringStarter.Until.Constants.Roles;
 
 import jakarta.validation.Valid;
@@ -28,7 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AccountController {
-    @Value("spring.mvc.static-path-pattern")
+    @Value("${spring.mvc.static-path-pattern}")
     private String uploadDir;
 
     @Autowired
@@ -72,7 +77,7 @@ public class AccountController {
         Optional<Account> accountOptional = accountService.getByEmail(auth);
         if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
-            System.out.println("***"+account.getFirstname());
+            System.out.println("*** Load account is: "+account.getFirstname());
             
             model.addAttribute("account", account);
             return "account_view/profile";
@@ -111,18 +116,46 @@ public class AccountController {
     
     @PostMapping("/profile/photo")
     public String loadPhotoHandle(@RequestParam("file") MultipartFile file,
-    @RequestAttribute RedirectAttributes attributes,Principal principal) {
+    RedirectAttributes attributes,Principal principal) {
         if (file.isEmpty()) {
             attributes.addAttribute("error", "No file upload");
             return "redirect:/profile";
         } else {
-            // String filename = StringUtils.cleanPath(file.getOriginalFilename());
+            try {
+                String filename = StringUtils.cleanPath(file.getOriginalFilename());
+                System.out.println("*** File uploads: "+filename);
+                int length = 10;
+                String randomString = RandomString.getRandomString(length);
+                String finalFileString = randomString + filename;
+                String fileLocation = AppUtils.getUploadPath(finalFileString);
 
-            
-            
+                Path path = Paths.get(fileLocation);
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                attributes.addFlashAttribute("message","You successfully upload");
+                System.out.println("*** Path was prepare: "+ fileLocation);
+
+                String email = "email";
+                if (principal != null) {
+                    email = principal.getName();
+                }
+                Optional<Account> optionalAccount = accountService.getByEmail(email);
+                
+                if (optionalAccount.isPresent()) {
+                    Account uploadAccount = optionalAccount.get();
+                    Account account_by_id = accountService.getById(uploadAccount.getId()).get();
+                    String relativePath = uploadDir.replace("**", "uploads/"+finalFileString);
+                    System.out.println("*** Relative path prepare: "+relativePath);
+                    account_by_id.setPhoto(relativePath);
+                    accountService.save(account_by_id);
+                }
+                return "redirect:/profile";
+
+            } catch (Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            }
         }
-        
-        return null;
+        return "redirect:/profile";
     }
     
 }

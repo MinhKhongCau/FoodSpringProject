@@ -14,6 +14,7 @@ import com.myproject.SpringStarter.Model.Post;
 import com.myproject.SpringStarter.Service.AccountService;
 import com.myproject.SpringStarter.Service.AuthorityService;
 import com.myproject.SpringStarter.Service.PostService;
+import com.myproject.SpringStarter.Until.RandomString;
 import com.myproject.SpringStarter.Until.Constants.Privillage;
 import com.myproject.SpringStarter.Until.Constants.Roles;
 
@@ -73,6 +74,9 @@ public class SeedData implements CommandLineRunner {
             Post post4 =  new Post("Post 04","Post 04 Body ................",account3);
             postService.save(post4);
         }
+
+        String randomString = RandomString.getRandomString(10);
+        System.out.println("***"+randomString);
     }
     
 }

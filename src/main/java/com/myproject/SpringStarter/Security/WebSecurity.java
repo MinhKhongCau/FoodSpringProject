@@ -18,12 +18,13 @@ public class WebSecurity {
         "/",
         "/home",
         "/register",
-        "/about/**",
         "/db-console/**",
         "/login/**",
+        "/about/**",
         "/css/**",
         "/fonts/**",
         "/images/**",
+        "/uploads/**",
         "js/**"
     };
 
