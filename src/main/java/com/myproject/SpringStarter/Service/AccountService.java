@@ -40,7 +40,7 @@ public class AccountService implements UserDetailsService {
         if (account.getPhoto() == null) {
             account.setPhoto("/images/person_img.png");
         }
-        System.out.println("***"+account.toString());
+        System.out.println("*** Saved account: "+account.toString());
 
         return accountRepsitory.save(account);
     }

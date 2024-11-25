@@ -7,7 +7,7 @@
 
   <div class="hero_area">
     <div class="bg-box">
-      <img th:src="images/nav-bg.jpg" alt="">
+      <img th:src="@{images/nav-bg.jpg}" alt="">
     </div>
     <header th:replace="~{/Fragments/header :: header}"></header>
   </div>
@@ -23,10 +23,10 @@
         <div class="col-md-6">
           <div class="form_container">
             <div class="mb-3">
-              <div>
+              <div width="215" height="200">
                 <img th:src="@{${account.photo}}" alt="Photo profile" class="img-thumbnail rounded-circle" width="215" height="200">
               </div>
-              <div th:if="${error}" class="alert alert-danger"
+              <div th:if="${error ne null}" class="alert alert-danger"
                 role="alert">File upload error</div>
               <div th:text="${message}" th:if="${message}" class="alert alert-success"
                 role="alert"></div>

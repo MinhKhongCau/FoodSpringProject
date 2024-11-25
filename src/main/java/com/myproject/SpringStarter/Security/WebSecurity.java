@@ -20,12 +20,13 @@ public class WebSecurity {
         "/register",
         "/db-console/**",
         "/login/**",
+        "/forgot-password/**",
         "/about/**",
         "/css/**",
         "/fonts/**",
         "/images/**",
         "/uploads/**",
-        "js/**"
+        "/js/**"
     };
 
     @Bean
@@ -49,6 +50,7 @@ public class WebSecurity {
                 .failureUrl("/login?error")
                 .permitAll()
             )
+            .rememberMe(rememberMe -> rememberMe.key("uniqueAndSecret"))
             .logout((logout) -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/home")

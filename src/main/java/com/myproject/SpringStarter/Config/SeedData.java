@@ -50,7 +50,7 @@ public class SeedData implements CommandLineRunner {
         Account account2 = new Account("account02@studyeasy.org","password","user02","lname02",Roles.USER.getRole());
         Account account3 = new Account("admin01@studyeasy.org","admin","admin01","lname01",Roles.ADMIN.getRole());
         Account account4 = new Account("admin02@studyeasy.org","admin","admin02","lname01",Roles.EDITOR.getRole());
-
+        Account account5 = new Account("ngoquangminh.1922@gmail.com","minhn","Ngo","Minh",Roles.EDITOR.getRole());
         
         Set<Authority> authorities = new HashSet<>();
         authorityService.findById(Privillage.ACCESS_ADMIN_PANEL.getId()).ifPresent(authorities::add);
@@ -63,6 +63,7 @@ public class SeedData implements CommandLineRunner {
         accountService.save(account2);
         accountService.save(account3);
         accountService.save(account4);
+        accountService.save(account5);
         
         if (listPost.size() == 0) {    
             Post post1 = new Post("Post 01","Post 01 Body ................",account1);

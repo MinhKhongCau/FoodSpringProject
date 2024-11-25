@@ -21,7 +21,7 @@
       </div>
       <div class="row">
         <div class="col-md-6">
-          <div class="form_container">
+          <div class="form_container mb-3">
             <form action="#" method="post" th:action="@{/login}" th:object="${account}">
               <div>
                 <input id="email" name="email" type="email" class="form-control" placeholder="Your email" required/>
@@ -29,13 +29,20 @@
               <div>
                 <input id="password" name="password" type="password" class="form-control" placeholder="Your password" required/>
               </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="remember-me"/>
+                <label class="form-check-label" for="flexCheckDefault">
+                  Remember-me
+                </label>
+              </div>
               <div class="btn_box">
-                <button type="submit">
-                  Login
-                </button>
+              <button type="submit">
+                Login
+              </button>
               </div>
             </form>
           </div>
+          <a th:href="@{/forgot-password}" >Fogot password</a>
         </div>
       </div>
     </div>

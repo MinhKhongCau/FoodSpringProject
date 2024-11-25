@@ -1,6 +1,7 @@
 package com.myproject.SpringStarter.Model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,6 +53,10 @@ public class Account {
     private String gender;
     
     private String photo;
+
+    private String resetPasswordToken;
+
+    private LocalDateTime resetPasswordExpiry;
 
     @OneToMany(mappedBy = "account")
     private List<Post> posts;

@@ -5,7 +5,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,9 +23,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.myproject.SpringStarter.Model.Account;
 import com.myproject.SpringStarter.Service.AccountService;
+import com.myproject.SpringStarter.Service.EmailService;
 import com.myproject.SpringStarter.Until.AppUtils;
 import com.myproject.SpringStarter.Until.RandomString;
 import com.myproject.SpringStarter.Until.Constants.Roles;
+import com.myproject.SpringStarter.Until.Email.EmailData;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,10 +35,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+
 @Controller
 public class AccountController {
     @Value("${spring.mvc.static-path-pattern}")
     private String uploadDir;
+
+    @Value("${password.token.reset.timeout.minute}")
+    private int tokenTimeOut;
+
+    @Autowired 
+    private EmailService emailService;
 
     @Autowired
     private AccountService accountService;
@@ -118,7 +129,7 @@ public class AccountController {
     public String loadPhotoHandle(@RequestParam("file") MultipartFile file,
     RedirectAttributes attributes,Principal principal) {
         if (file.isEmpty()) {
-            attributes.addAttribute("error", "No file upload");
+            attributes.addFlashAttribute("error", "No file upload");
             return "redirect:/profile";
         } else {
             try {
@@ -156,6 +167,39 @@ public class AccountController {
             }
         }
         return "redirect:/profile";
+    }
+    
+    @GetMapping("/forgot-password")
+    public String fogotPassword(Model model) {
+        return "account_view/forgot_password";
+    }
+
+    @PostMapping("/forgot-password")
+    public String resetPasswordHandler(Model model, @RequestParam String email, RedirectAttributes attributes) {
+        //TODO: process POST request
+        Optional<Account> accountOptional = accountService.getByEmail(email);
+        if (accountOptional.isPresent()) {
+            String resetToken = UUID.randomUUID().toString();
+            LocalDateTime expiry = LocalDateTime.now().plusMinutes(tokenTimeOut);
+            Account account = accountService.getById(accountOptional.get().getId()).get();
+            account.setResetPasswordToken(resetToken);
+            account.setResetPasswordExpiry(expiry);
+            accountService.save(account);
+
+            // Add email service send message
+            String resetPasswordMessage = "This is the reset password link: http://localhost:8000/forgot-password?token"+resetToken;
+            EmailData emailData = new EmailData(email, resetPasswordMessage, "Reset password notification by QungMinh Application");
+            if (emailService.sendSimpleEmail(emailData) == false) {
+                attributes.addFlashAttribute("error", "Fail sending email, contact admin");
+                return "redirect:/forgot-password";
+            }
+
+            attributes.addFlashAttribute("message", "Email was send");
+            return "redirect:/forgot-password";
+        } else {
+            attributes.addFlashAttribute("error", "Email not available");
+            return "redirect:/forgot-password";
+        }
     }
     
 }
