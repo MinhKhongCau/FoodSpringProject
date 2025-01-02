@@ -23,6 +23,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
+            <p th:if="${error}" th:text="${error}" class="alert alert-danger"></p>
             <form action="#" method="post" th:action="@{/register}" th:object="${account}">
               <div>
                 <div th:if="${#fields.hasErrors('email')}" th:error="*{email}" class="alert alert-danger" role="alert">Email error</div>

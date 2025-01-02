@@ -74,4 +74,8 @@ public class AccountService implements UserDetailsService {
         return new User(account.getEmail(),account.getPassword(),grantedAuthorities);
     }
 
+    public Optional<Account> getByToken(String token) {
+        return accountRepsitory.findByToken(token);
+    }
+
 }

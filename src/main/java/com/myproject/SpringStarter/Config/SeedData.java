@@ -30,12 +30,12 @@ public class SeedData implements CommandLineRunner {
     private AuthorityService authorityService;
 
     /**
-     * Auto add 2 records when application started
+     * Auto add 4 records when application started
     */    
     @Override
     public void run(String... args) throws Exception {
         List<Post> listPost = postService.getAll();
-        
+
         System.out.println("***Initialized data in this Application");
 
         for (Privillage pri: Privillage.values()) {
@@ -77,7 +77,7 @@ public class SeedData implements CommandLineRunner {
         }
 
         String randomString = RandomString.getRandomString(10);
-        System.out.println("***"+randomString);
+        System.out.println("***This is random value: "+randomString);
     }
     
 }

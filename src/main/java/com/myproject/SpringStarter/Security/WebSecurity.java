@@ -21,6 +21,7 @@ public class WebSecurity {
         "/db-console/**",
         "/login/**",
         "/forgot-password/**",
+        "/change-password/**",
         "/about/**",
         "/css/**",
         "/fonts/**",

@@ -33,6 +33,8 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -43,6 +45,9 @@ public class AccountController {
 
     @Value("${password.token.reset.timeout.minute}")
     private int tokenTimeOut;
+
+    @Value("${site.domain}")
+    private String siteDomain;
 
     @Autowired 
     private EmailService emailService;
@@ -58,11 +63,16 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public String getRegister(@Valid @ModelAttribute Account account, BindingResult result) {
+    public String getRegister(@Valid @ModelAttribute Account account, BindingResult result, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             return "account_view/register";
         }
         System.out.println("***Save account:");
+        Optional<Account> accouOptional = accountService.getByEmail(account.getEmail());
+        if (accouOptional.isPresent()) {
+            attributes.addFlashAttribute("error", "This email was register");
+            return "redirect:/register";
+        }
         account.setRole(Roles.USER.getRole());
         accountService.save(account);
         SecurityContextHolder.clearContext();
@@ -187,7 +197,7 @@ public class AccountController {
             accountService.save(account);
 
             // Add email service send message
-            String resetPasswordMessage = "This is the reset password link: http://localhost:8000/forgot-password?token"+resetToken;
+            String resetPasswordMessage = "This is the reset password link: "+ siteDomain +"change-password?token="+resetToken;
             EmailData emailData = new EmailData(email, resetPasswordMessage, "Reset password notification by QungMinh Application");
             if (emailService.sendSimpleEmail(emailData) == false) {
                 attributes.addFlashAttribute("error", "Fail sending email, contact admin");
@@ -201,5 +211,46 @@ public class AccountController {
             return "redirect:/forgot-password";
         }
     }
+
+    @GetMapping("/change-password")
+    public String change_password(Model model, @RequestParam("token") String token,
+    RedirectAttributes attributes) {
+        Optional<Account> accountOptional = accountService.getByToken(token);
+
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            LocalDateTime now = LocalDateTime.now();
+            if (now.isAfter(accountOptional.get().getResetPasswordExpiry())) {
+                attributes.addFlashAttribute("error","Token was expired");
+                return "redirect:/forgot-password";
+            }
+            model.addAttribute("account",account);
+            return "account_view/change_password";
+        }
+
+        attributes.addFlashAttribute("error","Invalid token");
+        return "redirect:/forgot-password";
+    }
+    
+    @PostMapping("/change-password")
+    public String postMethodName(@ModelAttribute("account") Account account, RedirectAttributes attributes) {
+        Optional<Account> accountOptional = accountService.getById(account.getId());
+
+        if (accountOptional.isPresent()) {
+            System.out.println(account.getId() + " " + account.getPassword() + " " + account.getEmail());
+            Account reAccount = accountOptional.get();
+            reAccount.setPassword(account.getPassword());
+            reAccount.setResetPasswordExpiry(null);
+            reAccount.setResetPasswordToken("");
+            accountService.save(reAccount);
+
+            attributes.addFlashAttribute("message","Password updated !!!");
+            return "redirect:/login";
+        }
+
+        attributes.addFlashAttribute("error","Change password unsuccessfull ");
+        return "redirect:/login";
+    }
+    
     
 }

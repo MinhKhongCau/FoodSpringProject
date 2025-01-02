@@ -54,6 +54,7 @@ public class Account {
     
     private String photo;
 
+    @Column(name="token")
     private String resetPasswordToken;
 
     private LocalDateTime resetPasswordExpiry;
@@ -80,5 +81,5 @@ public class Account {
         this.lastname = lastname;
         this.role = role;
     }
-    
+
 }
