@@ -12,17 +12,63 @@
   </div>
 
   <!-- about section -->
+  <form action="/home" , method="get">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <span class="navbar-brand">Sort by:</span>
+          <li class="nav-item active" style="padding-right: 20px;">
+            <div class="dropdown ps-4" aria-labelledby="navbarDropdown">
+              <select class="form-select" aria-label="Default select example" name="sort_by">
+                <option value="createAt">Create at</option>
+                <option value="updateAt">Update at</option>
+              </select>
+            </div>
+          </li>
+          <span class="navbar-brand">Per page:</span>
+          <li class="nav-item active" style="padding-right: 20px;">
+            <div class="dropdown" aria-labelledby="navbarDropdown">
+              <select class="form-select" aria-label="Default select example" name="per_page">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+              </select>
+            </div>
+          </li>
 
+          <li class="nav-item active">
+            <div class="input-group-prepend">
+              <button class="btn btn-outline-secondary" type="submit" id="dropdownMenuButton">Applies</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </form>
   <section class="about_section layout_padding">
+
     <div class="container">
-        <div class="posts" th:each="post : ${posts}">
-            <h3><a th:href="@{'/post/'+ ${post.id}}" th:text="${post.title}"></a></h3>
-            <h5 th:text="'Author: ' + ${post.account.lastname} + ' | CreateAt: ' + ${#temporals.format(post.createAt,'yyyy-MM-dd HH:mm')}"></h5>
-            <h5 th:if="${post.updateAt}"  th:text="'UpdateAt: ' + ${#temporals.format(post.updateAt,'yyyy-MM-dd HH:mm')}"></h5>
-            <p th:utext="${post.body}"></p>
-           </hr>
-         </div>
+      <!-- about section -->
+
+      <div class="posts" th:each="post : ${posts}">
+        <h3><a th:href="@{'/post/'+ ${post.id}}" th:text="${post.title}"></a></h3>
+        <h5
+          th:text="'Author: ' + ${post.account.lastname} + ' | CreateAt: ' + ${#temporals.format(post.createAt,'yyyy-MM-dd HH:mm')}">
+        </h5>
+        <h5 th:if="${post.updateAt}" th:text="'UpdateAt: ' + ${#temporals.format(post.updateAt,'yyyy-MM-dd HH:mm')}">
+        </h5>
+        <p th:utext="${post.body}"></p>
+        </hr>
+      </div>
     </div>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <th:block th:each="link : ${links}">
+          <li class="page-item"><th:block th:utext="${link}">link</th:block></li>
+        </th:block>
+      </ul>
+    </nav>
   </section>
 
   <!-- end about section -->

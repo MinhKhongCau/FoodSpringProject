@@ -33,7 +33,6 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -197,8 +196,13 @@ public class AccountController {
             accountService.save(account);
 
             // Add email service send message
-            String resetPasswordMessage = "This is the reset password link: "+ siteDomain +"change-password?token="+resetToken;
-            EmailData emailData = new EmailData(email, resetPasswordMessage, "Reset password notification by QungMinh Application");
+            String resetPasswordMessage = String.format(
+                "This is the reset password link: %schange-password?token=%s%n%n" +
+                "If you did not request this, you can safely ignore this email.%n" +
+                "To unsubscribe, please click here: %s unsubscribe",
+                siteDomain, resetToken, siteDomain
+            );
+            EmailData emailData = new EmailData(email, resetPasswordMessage, "Email link to reset password");
             if (emailService.sendSimpleEmail(emailData) == false) {
                 attributes.addFlashAttribute("error", "Fail sending email, contact admin");
                 return "redirect:/forgot-password";

@@ -23,10 +23,13 @@ public class EmailService {
 
             mailMessage.setFrom(username);
             mailMessage.setTo(emailData.getReciptient());
+            mailMessage.setSubject(emailData.getSubject());
             mailMessage.setText(emailData.getMessageBody());
             System.out.println("Sended email from "+username+" to "+ emailData.getReciptient() + "| Content is "+ emailData.getMessageBody());
 
             javaMailSender.send(mailMessage);
+
+            Thread.sleep(1000);
             return true;
         } catch (Exception e) {
             // TODO: handle exception
