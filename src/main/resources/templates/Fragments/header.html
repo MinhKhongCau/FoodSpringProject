@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:th="http://www.thymeleaf.org"
-                xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <div th:fragment="headerFragment" class="hero_area">
     <div class="bg-box">
-        <img th:src="images/nav-bg.jpg" alt="">
+        <img th:src="/resources/static/images/nav-bg.jpg" alt="">
     </div>
     <!-- header section strats -->
     <header class="header_section">
+        <div class="bg-box">
+            <img src="/resources/static/images/nav-bg.jpg" alt="">
+        </div>
         <div class="container">
             <nav class="navbar navbar-expand-lg custom_nav-container ">
                 <a class="navbar-brand" href="index.html">

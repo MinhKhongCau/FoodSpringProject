@@ -23,11 +23,12 @@ public class WebSecurity {
         "/forgot-password/**",
         "/change-password/**",
         "/about/**",
-        "/css/**",
-        "/fonts/**",
-        "/images/**",
-        "/uploads/**",
-        "/js/**"
+        "/resources/**"
+        // "/css/**",
+        // "/fonts/**",
+        // "/images/**",
+        // "/uploads/**",
+        // "/js/**"
     };
 
     @Bean
