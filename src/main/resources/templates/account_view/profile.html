@@ -33,6 +33,8 @@
               </button>
             </div>
             <form action="#" method="post" th:action="@{/profile}" th:object="${account}">
+              <input id="id" name="id" type="hidden" class="form-control" placeholder="Your email"
+                  th:field="*{id}" />
               <div>
                 <label for="inputEmail" class="form-label">Email address</label>
                 <div th:if="${#fields.hasErrors('email')}" th:error="*{email}" class="alert alert-danger" role="alert">

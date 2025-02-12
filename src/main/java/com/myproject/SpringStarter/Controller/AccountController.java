@@ -89,7 +89,7 @@ public class AccountController {
      */
     @GetMapping("/profile")
     @PreAuthorize("isAuthenticated()")
-    public String profile(Model model, Principal principal) {
+    public Account profile(Model model, Principal principal) {
         String auth = "email";
         if (principal != null) {
             auth = principal.getName();
@@ -100,9 +100,9 @@ public class AccountController {
             System.out.println("*** Load account is: "+account.getFirstname());
             
             model.addAttribute("account", account);
-            return "account_view/profile";
+            return account;
         }
-        return "/404";
+        return accountOptional.get();
     }
 
     @PostMapping("/profile")
@@ -142,6 +142,7 @@ public class AccountController {
             return "redirect:/profile";
         } else {
             try {
+                @SuppressWarnings("null")
                 String filename = StringUtils.cleanPath(file.getOriginalFilename());
                 System.out.println("*** File uploads: "+filename);
                 int length = 10;

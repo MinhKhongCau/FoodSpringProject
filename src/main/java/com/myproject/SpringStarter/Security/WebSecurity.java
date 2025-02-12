@@ -24,11 +24,6 @@ public class WebSecurity {
         "/change-password/**",
         "/about/**",
         "/resources/**"
-        // "/css/**",
-        // "/fonts/**",
-        // "/images/**",
-        // "/uploads/**",
-        // "/js/**"
     };
 
     @Bean
